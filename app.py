@@ -1,19 +1,12 @@
 from flask import Flask, render_template
 from flask_bootstrap import Bootstrap
-import netifaces as ni
 import socket
 
 app = Flask(__name__)
 Bootstrap(app)
 
 def get_ipaddress():
-    ip = None
-    for interface in ni.interfaces():
-        if interface == 'lo':
-            continue
-        data = ni.ifaddresses(interface)
-        if 2 in data:
-            ip = data[2][0]['addr']
+    ip = socket.gethostbyname(socket.gethostname())
     return ip
 
 @app.route('/')
